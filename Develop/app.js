@@ -33,3 +33,70 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+const { error } = require("console");
+var employees = [];
+
+function WorkerClassification() {
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "WorkerType",
+          message: "Please select the type of team member you would like to add.",
+          choices: [
+            "Engineer",
+            "Intern",
+            "No more additional team members needed",
+          ],
+        },
+      ])
+      .then((response) => {
+        console.log(response);
+        if(response.WorkerType === "No more additional team members needed"){
+             fs.writeFile(outputPath, render(employees), function(err){
+              if(err) throw err 
+              alert("File Created")
+              process.exit(0);
+             })
+          
+        }else if(response.memberChoice === "Engineer"){
+            engineerInfo();
+        } else{
+            internInfo();
+        }
+      });
+  }
+
+  function managerInfo() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "ManagerName",
+          message: "Input Manager Name:",
+        },
+        {
+          type: "input",
+          name: "ManagerID",
+          message: "Input Manager ID:",
+        },
+        {
+          type: "input",
+          name: "ManagerEmail",
+          message: "Input Manager Email:",
+        },
+        {
+          type: "input",
+          name: "ManagerOfficeNum",
+          message: "Input Manager Office Number:",
+        },
+      ])
+      .then((response) => {
+        console.log(response);
+        const manager = new Manager(response.ManagerName, response.ManagerID, response.ManagerEmail, response.ManagerOfficeNum)
+        console.log(manager)
+          employees.push(manager);
+        WorkerClassification();
+      });
+  }
