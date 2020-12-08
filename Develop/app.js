@@ -45,58 +45,119 @@ function WorkerClassification() {
           name: "WorkerType",
           message: "Please select the type of team member you would like to add.",
           choices: [
-            "Engineer",
             "Intern",
-            "No more additional team members needed",
+            "Engineer",
+            "No need for additional team members",
           ],
         },
       ])
       .then((response) => {
-        console.log(response);
-        if(response.WorkerType === "No more additional team members needed"){
+        if(response.WorkerType === "No need for additional team members"){
              fs.writeFile(outputPath, render(employees), function(err){
               if(err) throw err 
               alert("File Created")
               process.exit(0);
              })
           
-        }else if(response.memberChoice === "Engineer"){
-            engineerInfo();
+        }else if(response.WorkerType === "Intern"){
+            InternData();
         } else{
-            internInfo();
+            EngineerData();
         }
       });
-  }
+}
 
-  function managerInfo() {
+function ManagerData() {
     inquirer
       .prompt([
         {
-          type: "input",
           name: "ManagerName",
+          type: "input",
           message: "Input Manager Name:",
         },
         {
-          type: "input",
           name: "ManagerID",
+          type: "input",
           message: "Input Manager ID:",
         },
         {
-          type: "input",
           name: "ManagerEmail",
+          type: "input",
           message: "Input Manager Email:",
         },
         {
-          type: "input",
           name: "ManagerOfficeNum",
+          type: "input",
           message: "Input Manager Office Number:",
         },
       ])
       .then((response) => {
-        console.log(response);
-        const manager = new Manager(response.ManagerName, response.ManagerID, response.ManagerEmail, response.ManagerOfficeNum)
-        console.log(manager)
-          employees.push(manager);
+        const ManagerCard = new Manager(response.ManagerName, response.ManagerID, response.ManagerEmail, response.ManagerOfficeNum)
+        employees.push(ManagerCard);
         WorkerClassification();
       });
-  }
+}
+
+function InternData() {
+    inquirer
+      .prompt([
+        {
+          name: "InternName",
+          type: "input",
+          message: "Input Intern Name:",
+        },
+        {
+          name: "InternID",
+          type: "input",
+          message: "Input Intern ID:",
+        },
+        {
+          name: "InternEmail",
+          type: "input",
+          message: "Input Intern Email:",
+        },
+        {
+          name: "InternUniversity",
+          type: "input",
+          message: "Input Intern University:",
+        },
+      ])
+      .then((response) => {
+        const InternCard = new Intern(response.InternName, response.InternID, response.InternEmail, response.InternUniversity);
+        employees.push(InternCard);
+        teamMembers();
+      });
+}
+
+function EngineerData() {
+    inquirer
+        .prompt([
+        {
+            name: "EngineerName",
+            type: "input",
+            message: "Input Engineer Name:",
+        },
+        {
+            name: "EngineerID",
+            type: "input",
+            message: "Input Engineer ID:",
+        },
+        {
+            name: "EngineerEmail",
+            type: "input",
+            message: "Input Engineer Email:",
+        },
+        {
+            name: "EngineerGithub",
+            type: "input",
+            message: "Input Engineer Github:",
+        },
+        ])
+        .then((response) => {
+        const EngineerCard = new Intern(response.EngineerName, response.EngineerID, response.EngineerEmail, response.EngineerGithub);
+        employees.push(EngineerCard);
+        teamMembers();
+        });
+}
+
+ManagerData();
