@@ -125,7 +125,7 @@ function InternData() {
       .then((response) => {
         const InternCard = new Intern(response.InternName, response.InternID, response.InternEmail, response.InternUniversity);
         employees.push(InternCard);
-        teamMembers();
+        WorkerClassification();
       });
 }
 
@@ -156,7 +156,7 @@ function EngineerData() {
         .then((response) => {
         const EngineerCard = new Intern(response.EngineerName, response.EngineerID, response.EngineerEmail, response.EngineerGithub);
         employees.push(EngineerCard);
-        teamMembers();
+        WorkerClassification();
         });
 }
 
