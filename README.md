@@ -6,3 +6,6 @@ Webpages are generated with the utilization of Object Oriented Programming Struc
 Requirements using npm packages were incorporated to ensure the user inputs are created successfully.
 
 Make sure to install npm's: inquirer, jest, fs (file-system)
+
+Instruction Video:
+https://drive.google.com/file/d/1za0_blW6CmyXrMrNKN6GTGBu7xCJUEGY/view
